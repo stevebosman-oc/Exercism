@@ -1,15 +1,14 @@
 class Triangle<out T : Number>(val a: T, val b: T, val c: T) {
 
     init {
-        if (a == 0 && b == 0 && c == 0) throw IllegalArgumentException("Not a triangle")
-        if ((a.toDouble() + b.toDouble() < c.toDouble())
-            || (a.toDouble() + c.toDouble() < b.toDouble())
-            || (b.toDouble() + c.toDouble() < a.toDouble())) {
-            throw IllegalArgumentException("Not a triangle")
+        val sides = listOf(a, b, c).map(Number::toDouble).sorted()
+        require(sides[0] > 0 && sides[0] + sides[1] > sides[2]) {
+            "Not a triangle"
         }
     }
 
-    val isEquilateral: Boolean = (a == b) && (b == c)
-    val isIsosceles: Boolean = (a == b) || (b == c) || (a == c)
-    val isScalene: Boolean = !isIsosceles
+    private val uniqueSideLengthsCount = setOf(a, b, c).size
+    val isEquilateral: Boolean = uniqueSideLengthsCount == 1
+    val isIsosceles: Boolean = uniqueSideLengthsCount <= 2
+    val isScalene: Boolean = uniqueSideLengthsCount == 3
 }
