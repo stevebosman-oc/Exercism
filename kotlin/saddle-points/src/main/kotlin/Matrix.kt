@@ -5,15 +5,12 @@ class Matrix(cells: List<List<Int>>) {
     val saddlePoints: Set<MatrixCoordinate>
 
     init {
-        if (cells[0].isEmpty()) {
-            saddlePoints = emptySet()
+        val minPoints = findMinColumnCoordinates(cells)
+        if (minPoints.isEmpty()) {
+            saddlePoints = minPoints
         } else {
             val maxPoints = findMaxRowCoordinates(cells)
-
-            val minPoints = findMinColumnCoordinates(cells)
-
-            saddlePoints = minPoints.intersect(maxPoints).toSet()
-
+            saddlePoints = minPoints.intersect(maxPoints)
         }
     }
 
