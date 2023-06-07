@@ -1,12 +1,11 @@
 object Flattener {
     fun flatten(source: Collection<Any?>): List<Any> {
-        val list = mutableListOf<Any>()
-        source.forEach { e ->
-            when (e) {
-                is Collection<*> -> list.addAll(flatten(e))
-                is Any -> list.add(e)
+        return source.flatMap {
+            when (it) {
+                is Collection<*> -> flatten(it)
+                is Any -> listOf(it)
+                else -> emptyList()
             }
         }
-        return list.toList()
     }
 }
