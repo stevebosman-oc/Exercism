@@ -14,35 +14,30 @@ class Matrix(cells: List<List<Int>>) {
         }
     }
 
-    private fun findMinColumnCoordinates(cells: List<List<Int>>): MutableSet<MatrixCoordinate> {
+    private fun findMinColumnCoordinates(cells: List<List<Int>>): Set<MatrixCoordinate> {
         val minPoints = mutableSetOf<MatrixCoordinate>()
+        // assumes all rows same size, but tests are happy
         for (j in 0 until cells[0].size) {
-            var minValue: Int = cells[0][j]
-            for (i in 1 until cells.size) {
-                minValue = minOf(minValue, cells[i][j])
-            }
+            val minValue = cells.minOf { row -> row[j] }
             for (i in cells.indices) {
                 if (minValue == cells[i][j]) {
                     minPoints.add(MatrixCoordinate(i + 1, j + 1))
                 }
             }
         }
-        return minPoints
+        return minPoints.toSet()
     }
 
-    private fun findMaxRowCoordinates(cells: List<List<Int>>): MutableSet<MatrixCoordinate> {
+    private fun findMaxRowCoordinates(cells: List<List<Int>>): Set<MatrixCoordinate> {
         val maxPoints = mutableSetOf<MatrixCoordinate>()
-        for (i in cells.indices) {
-            var maxValue: Int = cells[i][0]
-            for (j in 1 until cells[i].size) {
-                maxValue = maxOf(maxValue, cells[i][j])
-            }
-            for (j in 0 until cells[i].size) {
-                if (maxValue == cells[i][j]) {
+        cells.forEachIndexed{i, row ->
+            val maxValue: Int? = row.maxOrNull()
+            row.forEachIndexed{j, value ->
+                if (maxValue == value) {
                     maxPoints.add(MatrixCoordinate(i + 1, j + 1))
                 }
             }
         }
-        return maxPoints
+        return maxPoints.toSet()
     }
 }
