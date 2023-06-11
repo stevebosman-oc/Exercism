@@ -1,11 +1,10 @@
 class Robot {
     companion object {
         private val NAMES = mutableSetOf<String>()
-        private const val ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     }
-    private var mutableName = newName()
+    private var mutableName = generateName()
 
-    private fun newName(): String {
+    private fun generateName(): String {
         var newName: String
         do {
             newName = "${randomLetter()}${randomLetter()}${randomDigit()}${randomDigit()}${randomDigit()}"
@@ -14,7 +13,7 @@ class Robot {
         return newName
     }
 
-    private fun randomLetter() = ALPHABET[(0..25).random()]
+    private fun randomLetter() = ('A'..'Z').random()
     private fun randomDigit() = (0..9).random()
 
     val name: String
@@ -22,7 +21,7 @@ class Robot {
 
     fun reset() {
         val originalName = mutableName
-        mutableName = newName()
+        mutableName = generateName()
         NAMES.remove(originalName)
     }
 }
