@@ -1,6 +1,6 @@
 class RotationalCipher(val offset: Int) {
     fun encode(text: String): String {
-        return String(text.map {
+        return text.map {
             if (it.isLetter()) {
                 var raw = it + offset
                 if (it.isUpperCase() && raw > 'Z') raw -= 26
@@ -9,6 +9,6 @@ class RotationalCipher(val offset: Int) {
             } else {
                 it
             }
-        }.toCharArray())
+        }.joinToString()
     }
 }
