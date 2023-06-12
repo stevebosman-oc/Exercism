@@ -2,12 +2,12 @@ class RotationalCipher(private val offset: Int) {
     fun encode(text: String): String {
         return text.map {
             when {
-                it.isLowerCase() -> rotate(it, 'a')
-                it.isUpperCase() -> rotate(it, 'A')
+                it.isLowerCase() -> it.rotate('a')
+                it.isUpperCase() -> it.rotate('A')
                 else -> it
             }
         }.joinToString("")
     }
 
-    private fun rotate(it: Char, base: Char) = (base + (it - base + offset) % 26)
+    private fun Char.rotate(base: Char) = (base + (this - base + offset) % 26)
 }
