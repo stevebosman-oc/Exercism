@@ -1,8 +1,14 @@
-class RotationalCipher {
-
-    // TODO: Implement proper constructor
-
+class RotationalCipher(val offset: Int) {
     fun encode(text: String): String {
-        TODO("Implement this function to complete the task")
+        return String(text.map {
+            if (it.isLetter()) {
+                var raw = it + offset
+                if (it.isUpperCase() && raw > 'Z') raw -= 26
+                if (it.isLowerCase() && raw > 'z') raw -= 26
+                raw
+            } else {
+                it
+            }
+        }.toCharArray())
     }
 }
