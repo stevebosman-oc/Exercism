@@ -1,14 +1,13 @@
-class RotationalCipher(val offset: Int) {
+class RotationalCipher(private val offset: Int) {
     fun encode(text: String): String {
         return text.map {
-            if (it.isLetter()) {
-                var raw = it + offset
-                if (it.isUpperCase() && raw > 'Z') raw -= 26
-                if (it.isLowerCase() && raw > 'z') raw -= 26
-                raw
-            } else {
-                it
+            when {
+                it.isLowerCase() -> rotate(it, 'a')
+                it.isUpperCase() -> rotate(it, 'A')
+                else -> it
             }
-        }.joinToString()
+        }.joinToString("")
     }
+
+    private fun rotate(it: Char, base: Char) = (base + (it - base + offset) % 26)
 }
